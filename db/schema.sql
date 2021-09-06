@@ -8,15 +8,16 @@ USE employee_tracker_db;
 DROP TABLE IF EXISTS department;
 CREATE TABLE department (
   id INT NOT NULL,
-  name VARCHAR(30) 
+  name VARCHAR (30),
+  PRIMARY KEY (id)
  );
 
-DROP TABLE IF EXISTS role;
-CREATE TABLE role (
+DROP TABLE IF EXISTS roles;
+CREATE TABLE roles (
   id INT,
   title VARCHAR(30),
   salary DECIMAL,
- FOREIGN KEY (deparment_id) REFERENCES department(id)
+ FOREIGN KEY (department_id) REFERENCES departments(id)
     -- ON DELETE SET NULL
  );
 
@@ -26,6 +27,6 @@ CREATE TABLE employee (
   first_name VARCHAR(30),
   last_name VARCHAR(30),
   role_id INT,
- FOREIGN KEY (role_id) REFERENCES role(id)
+ FOREIGN KEY (roles_id) REFERENCES roles(id)
    -- needed????   ON DELETE SET NULL
  );

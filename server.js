@@ -1,5 +1,4 @@
 
-// do we need this????
 
 // Import and require express
 const express = require('express');
@@ -9,14 +8,12 @@ const mysql = require('mysql2');
 
 // set port or get default of 3001
 const PORT = process.env.PORT || 3001;
-const app = express();
+
 
 // Express middleware
+const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-
-// from class   ....  ???
 
 // Connect to database
 const db = mysql.createConnection(
@@ -26,8 +23,26 @@ const db = mysql.createConnection(
       user: 'root',
       // TODO: Add MySQL password here
       password: '',
-      database: 'movies_db'
+      database: 'XXX_db'
     },
-    console.log(`Connected to the movies_db database.`)
+    console.log(`Connected to the XXX_db database.`)
   );
+
+  // do we need this???
+
+
+// Query database
+db.query('SELECT * FROM students', function (err, results) {
+  console.log(results);
+});
+
+// Default response for any other request (Not Found)
+app.use((req, res) => {
+  res.status(404).end();
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
   
