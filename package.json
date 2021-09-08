@@ -2,10 +2,10 @@
   "name": "employee_tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index",
-    "watch": "nodemon index"
+    "start": "nodemon server",
+    "watch": "nodemon server"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +14,7 @@
     "console.table": "^0.10.0",
     "figlet": "^1.5.2",
     "inquirer": "^6.2.1",
-    "mysql2": "^2.3.0"
+    "mysql2": "^2.3.0",
+    "nodemon": "^2.0.12"
   }
 }

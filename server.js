@@ -1,6 +1,6 @@
 // Import and require express
-const express = require("express");
-
+// const express = require("express");
+const inquirer = require("inquirer")
 // Import and require mysql2
 const mysql = require("mysql2");
 
@@ -11,9 +11,9 @@ const PORT = process.env.PORT || 3001;
 const figlet = require('figlet');
 
 // Express middleware
-const app = express();
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+// const app = express();
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
 
 // Connect to database
 const db = mysql.createConnection(
@@ -22,22 +22,30 @@ const db = mysql.createConnection(
     // MySQL username,
     user: "root",
     // TODO: Add MySQL password here
-    password: "",
-    database: "XXX_db",
+    password: process.env.DB_PASSWORD,
+    database: "employee_tracker_db",
   },
   console.log(`Connected to the XXX_db database.`)
 );
 
+console.log(" ")
 
+// figlet('EMPLOYEE                                MANAGER', 
 
-figlet('EMPLOYEE MANAGER', function(err, data) {
-    if (err) {
-        console.log('Something went wrong...');
-        console.dir(err);
-        return;
-    }
-    console.log(data)
-});
+// {
+//   font: "Standard",
+//   horizontalLayout: "half",
+//   verticalLayout: "full",
+// },
+
+// function(err, data) {
+//     if (err) {
+//         console.log('Something went wrong...');
+//         console.dir(err);
+//         return;
+//     }
+//     console.log(data)
+// });
 
 
 
@@ -46,22 +54,22 @@ figlet('EMPLOYEE MANAGER', function(err, data) {
 
 
 // Create an employee ??
-app.post("/api/new-movie", ({ body }, res) => {
-  const sql = `INSERT INTO movies (movie_name)
-    VALUES (?)`;
-  const params = [body.movie_name];
+// app.post("/api/new-movie", ({ body }, res) => {
+//   const sql = `INSERT INTO movies (movie_name)
+//     VALUES (?)`;
+//   const params = [body.movie_name];
 
-  db.query(sql, params, (err, result) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: "success",
-      data: body,
-    });
-  });
-});
+//   db.query(sql, params, (err, result) => {
+//     if (err) {
+//       res.status(400).json({ error: err.message });
+//       return;
+//     }
+//     res.json({
+//       message: "success",
+//       data: body,
+//     });
+//   });
+// });
 
 function tracker() {
   inquirer
@@ -105,10 +113,10 @@ db.query("SELECT * FROM students", function (err, results) {
 });
 
 // Default response for any other request (Not Found)
-app.use((req, res) => {
-  res.status(404).end();
-});
+// app.use((req, res) => {
+//   res.status(404).end();
+// });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+// });
