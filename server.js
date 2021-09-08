@@ -1,14 +1,14 @@
-
-
 // Import and require express
-const express = require('express');
+const express = require("express");
 
 // Import and require mysql2
-const mysql = require('mysql2');
+const mysql = require("mysql2");
 
 // set port or get default of 3001
 const PORT = process.env.PORT || 3001;
 
+// FIGfont spec in JavaScript
+const figlet = require('figlet');
 
 // Express middleware
 const app = express();
@@ -17,22 +17,90 @@ app.use(express.json());
 
 // Connect to database
 const db = mysql.createConnection(
-    {
-      host: 'localhost',
-      // MySQL username,
-      user: 'root',
-      // TODO: Add MySQL password here
-      password: '',
-      database: 'XXX_db'
-    },
-    console.log(`Connected to the XXX_db database.`)
-  );
+  {
+    host: "localhost",
+    // MySQL username,
+    user: "root",
+    // TODO: Add MySQL password here
+    password: "",
+    database: "XXX_db",
+  },
+  console.log(`Connected to the XXX_db database.`)
+);
 
-  // do we need this???
 
+
+figlet('EMPLOYEE MANAGER', function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(data)
+});
+
+
+
+
+
+
+
+// Create an employee ??
+app.post("/api/new-movie", ({ body }, res) => {
+  const sql = `INSERT INTO movies (movie_name)
+    VALUES (?)`;
+  const params = [body.movie_name];
+
+  db.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: "success",
+      data: body,
+    });
+  });
+});
+
+function tracker() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Please enter your selection....",
+        name: "choices",
+        choices: [
+          " View All Departments",
+          " View All Roles",
+          " View All Employees",
+          " Add Department",
+          " Add A Role",
+          " Add An Employee",
+          " Update An Employee Role",
+          " Exit.",
+        ],
+      },
+    ])
+    .then(function (val) {
+      switch (val.choices) {
+        case "View All Departments.":
+          viewAllDepartments();
+          break;
+
+        case "View All Roles.":
+          viewAllRoles();
+          break;
+      }
+    });
+}
+
+tracker();
+
+// do we need this???
 
 // Query database
-db.query('SELECT * FROM students', function (err, results) {
+db.query("SELECT * FROM students", function (err, results) {
   console.log(results);
 });
 
@@ -44,5 +112,3 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-  
