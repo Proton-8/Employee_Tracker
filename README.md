@@ -81,7 +81,7 @@ In details it will have a database with the following three tables:
 </p>
 <h2>Screenshot of Startup</h2>
 
-<img src="Startup.jpg" alt=" DEMO screenshot">
+<img src="assets\Startup.jpg" alt=" DEMO screenshot">
 <p>
 
 
