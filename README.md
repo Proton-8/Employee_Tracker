@@ -79,9 +79,9 @@ In details it will have a database with the following three tables:
 <img src="Test-verified.gif" alt="Test DEMO GIF">
 
 </p>
-<h2>Screenshot of User input</h2>
+<h2>Screenshot of Startup</h2>
 
-<img src="Test-verified.jpg" alt="Test DEMO screenshot">
+<img src="Startup.jpg" alt=" DEMO screenshot">
 <p>
 
 
