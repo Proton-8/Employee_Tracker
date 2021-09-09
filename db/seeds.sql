@@ -1,25 +1,34 @@
 
 -- insert data into department table
-INSERT INTO department (id, name)
-VALUES (001, "Engineering"),
-       (002, "Sales"),
-       (003, "Purchasing"),
-       (004, "Finance"),
-       (005, "Production");
+
+       INSERT INTO department (name)
+VALUES ("Engineering"),
+       ("Sales"),
+       ("Marketing");
+        ("Finance"),
+        ("Production");
+
 
 -- insert data into roles table
-INSERT INTO roles (id, title, salary, department_id)
-VALUES (001, "Software Engineer", 100000, 001),
-       (002, "peanut butter", "staples", " "), 
-       (003, "peas-canned", "canned goods", " "),
-       (004, "ice cream", "frozen", " "),
-       (005, "potato chips", "snacks", " ");
+
+INSERT INTO roles (title, salary, department_id)
+VALUES ("Engineering Manager", 200000.00, 1),
+       ("Sales Manager", 180000.00, 2),
+       ("Software Engineer", 100000.00, 1),
+       ("Senior Software Engineer", 150000.00, 1),
+       ("Sales Associate", 80000.00, 2),
+       ("Marketing Manager", 300000.00, 3),
+       ("Marketing Associate", 250000.00, 3),
+       ("Payroll Associate", 50000, 4),
+       ("Pruction Worker", 60000, 5);
 
 
 -- insert data into employee table
-INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
-VALUES (001, "Ron", "Reagan", 1, 1),
-       (002, "Peanut", "Butter", 2, NULL ), 
-       (003, "Peas" , "Canned", 4, NULL),
-       (004, "ice cream", "frozen", " "),
-       (005, "potato chips", "snacks", " ");
+INSERT INTO employee (first_name, last_name, roles_id, manager_id)
+VALUES ("Ronald", "Reagan", 1, NULL ),
+       ("Peanut", "Butter", 2, 1 ), 
+       ("Peas" , "Canned", 4, NULL ),
+       ("Donald", "Duck", 5, 4 ),
+       ("Max", "Million", 6, 5 );
+
+

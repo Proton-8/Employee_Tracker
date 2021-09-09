@@ -7,29 +7,27 @@ USE employee_tracker_db;
 
 DROP TABLE IF EXISTS department;
 CREATE TABLE department (
-  id INT NOT NULL,
-  name VARCHAR (30),
-  PRIMARY KEY (id)
- );
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR (30)
+  );
 
 DROP TABLE IF EXISTS roles;
 CREATE TABLE roles (
-  id INT,
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(30),
   salary DECIMAL,
-  department_id INT NOT NULL,
-  PRIMARY KEY (id),
+  department_id INT,
   FOREIGN KEY (department_id) REFERENCES department(id)
-    -- ON DELETE SET NULL
+  ON DELETE SET NULL
  );
 
  DROP TABLE IF EXISTS employee;
 CREATE TABLE employee (
-  id INT NOT NULL,
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(30),
   last_name VARCHAR(30),
-  role_id INT,
-  PRIMARY KEY (id),
+  roles_id INT,
+  manager_id INT,
   FOREIGN KEY (roles_id) REFERENCES roles(id)
-   -- needed????   ON DELETE SET NULL
+  ON DELETE SET NULL
  );
