@@ -4,7 +4,7 @@
        INSERT INTO department (name)
 VALUES ("Engineering"),
        ("Sales"),
-       ("Marketing");
+       ("Marketing"),
         ("Finance"),
         ("Production");
 
@@ -20,7 +20,7 @@ VALUES ("Engineering Manager", 200000.00, 1),
        ("Marketing Manager", 300000.00, 3),
        ("Marketing Associate", 250000.00, 3),
        ("Payroll Associate", 50000, 4),
-       ("Pruction Worker", 60000, 5);
+       ("Prodction Worker", 60000, 5);
 
 
 -- insert data into employee table

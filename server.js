@@ -31,57 +31,63 @@ console.log(" ");
 
 //  EXTRA FLUFF --  Later
 
-figlet(
-  "EMPLOYEE         MANAGER",
+// figlet(
+//   "EMPLOYEE         MANAGER",
 
-  {
-    font: "Standard",
-    horizontalLayout: "3/4",
-    verticalLayout: "Full",
-  },
+//   {
+//     font: "Standard",
+//     horizontalLayout: "3/4",
+//     verticalLayout: "Full",
+//   },
 
-  function (err, data) {
-    if (err) {
-      console.log("Error found in Figlet...");
-      console.dir(err);
-      return;
-    }
-    console.log(data);
-  }
-);
+//   function (err, data) {
+//     if (err) {
+//       console.log("Error found in Figlet...");
+//       console.dir(err);
+//       return;
+//     }
+//     console.log(data);
+//   }
+// );
 
 // setInterval(1000);
+
+// Query database
+// db.query('SELECT * FROM department', function (err, results) {
+  // console.log(results);
+//   console.table(results);
+// });
+
+
 
 function tracker() {
   inquirer
   // present choices for database entry
-    .prompt([
-      {
+    .prompt([{
         type: "list",
         message: "Please enter your selection....",
         name: "choices",
         choices: [
-          " View All Departments ",
-          " View All Roles ",
-          " View All Employees ",
-          " Add Department ",
-          " Add A Role ",
-          " Add An Employee ",
-          " Update An Employee Role ",
-          " Quit ",
+          "View All Departments",
+          "View All Roles",
+          "View All Employees",
+          "Add Department",
+          "Add A Role",
+          "Add An Employee",
+          "Update An Employee Role",
+          "Quit"
         ],
       },
     ])
-
     // To review  -----------
-
     .then((entry) => {
-      getAnswerTo(entry.reply);
+      getAnswerTo(entry.choices);
     });
-
-  const getAnswerTo = (reply) => {
+  const getAnswerTo = async(reply) => {
     switch (reply) {
-      case "view All Departments":
+      case "View All Departments":
+        // console.log('hello world');
+        await  ViewAllDepartments();
         // call 'view all dept' function
         // employeeTrackerDatabase.ViewAllDepartments()
         //   .then((results) => console.table(results))
@@ -99,7 +105,6 @@ function tracker() {
         //   .then((results) => console.table(results))
         //   .catch((err) => console.error(err));
         break;
-
       case "Add Department.":
         // call 'add dept' function
         addDepartment();
@@ -120,7 +125,7 @@ function tracker() {
         updateEmployeeRole();
         break;
 
-      case "quit":
+      case "Quit":
         quit();
         break;
     }
@@ -129,11 +134,35 @@ function tracker() {
 
 
 
-//   to add each function  =============
+//    add each function  =============
 
 }
 
-function ViewAllDepartments() {
+async function ViewAllDepartments() {
+// Read all Dept and display
+  // const sql = `SELECT department.id AS Dept ID, 
+  // department.name AS Dept FROM department;`;
+  db.query('SELECT * FROM department', function (err, results) {
+    // console.log(results);
+    console.log(" ");
+  console.table(results);
+   });
+
+
+
+  // db.query(sql, (err, params, err, results) => {
+  //   if (err) {
+  //    console.table(results);
+  //   }else{
+  //     console.error(err);
+  //   }
+  //    return;
+  //      tracker();
+      
+  // });
+  
+
+
 
 }
 
@@ -158,6 +187,7 @@ function updateEmployeeRole() {
 }
 
 function quit() {
+  console.log('BYE')
   process.quit();
 }
 

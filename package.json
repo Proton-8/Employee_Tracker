@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server",
+    "start": "node server",
     "watch": "nodemon server"
   },
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "console.table": "^0.10.0",
+    "dotenv": "^10.0.0",
     "figlet": "^1.5.2",
     "inquirer": "^6.2.1",
     "mysql2": "^2.3.0",
