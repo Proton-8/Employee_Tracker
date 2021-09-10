@@ -53,8 +53,11 @@ In details it will have a database with the following three tables:
 
     * `manager_id`: `INT` to hold reference to another employee that is the manager of the current employee (`null` if the employee has no manager)
 
+### License Used
 
+* Uses MIT License
 
+ <br>
 
 
 
