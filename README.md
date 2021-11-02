@@ -77,7 +77,7 @@ In details it will have a database with the following three tables:
 
 
 
-<h2>  Example of the database being pupulated: </h2>
+<h2>  Example of the database being populated: </h2>
 
 <img src="Test-verified.gif" alt="Test DEMO GIF">
 

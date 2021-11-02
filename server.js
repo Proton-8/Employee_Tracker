@@ -1,5 +1,12 @@
 // MAIN CODE ---------------------
 
+
+// FIGfont special in JavaScript
+const {
+  default: chalk
+} = require("chalk");
+const figlet = require("figlet"); 
+
 // Import and require inquirer
 const inquirer = require("inquirer");
 // Import and require mysql2
@@ -11,12 +18,10 @@ const PORT = process.env.PORT || 3001;
 // Import and require console table for data layout
 require("console.table");
 
-// FIGfont spec in JavaScript
-const figlet = require("figlet");
+
 
 // Connect to database
-const db = mysql.createConnection(
-  {
+const db = mysql.createConnection({
     host: "localhost",
     // MySQL username,
     user: "root",
@@ -24,49 +29,22 @@ const db = mysql.createConnection(
     password: process.env.DB_PASSWORD,
     database: "employee_tracker_db",
   },
-  console.log(`Connected to the employee_tracker_db database.`)
+  console.log("Connected to the employee_tracker_db database.")
+
 );
 
+
+
 console.log(" ");
-
-//  EXTRA FLUFF --  Later
-
-// figlet(
-//   "EMPLOYEE         MANAGER",
-
-//   {
-//     font: "Standard",
-//     horizontalLayout: "3/4",
-//     verticalLayout: "Full",
-//   },
-
-//   function (err, data) {
-//     if (err) {
-//       console.log("Error found in Figlet...");
-//       console.dir(err);
-//       return;
-//     }
-//     console.log(data);
-//   }
-// );
-
-// setInterval(1000);
-
-// Query database
-// db.query('SELECT * FROM department', function (err, results) {
-  // console.log(results);
-//   console.table(results);
-// });
-
 
 
 function tracker() {
   inquirer
-  // present choices for database entry
+    // present choices for database entry
     .prompt([{
         type: "list",
         message: "Please enter your selection....",
-        name: "choices",
+        name: "selection",
         choices: [
           "View All Departments",
           "View All Roles",
@@ -78,33 +56,25 @@ function tracker() {
           "Quit"
         ],
       },
+      console.log(" "),
     ])
     // To review  -----------
     .then((entry) => {
-      getAnswerTo(entry.choices);
+      getAnswerTo(entry.selection);
     });
-  const getAnswerTo = async(reply) => {
+  const getAnswerTo =(reply) => {
     switch (reply) {
       case "View All Departments":
-        // console.log('hello world');
-        await  ViewAllDepartments();
-        // call 'view all dept' function
-        // employeeTrackerDatabase.ViewAllDepartments()
-        //   .then((results) => console.table(results))
-        //   .catch((err) => console.error(err));
-        break;
+      // View All Departments function  
+            ViewAllDepartments();
+          break;
       case "View All Roles":
-        // call 'view all roles' function
-        // employeeTrackerDatabase.GetAllRoles()
-        //   .then((results) => console.table(results))
-        //   .catch((err) => console.error(err));
+       ViewRoles();
         break;
       case "View All Employees":
         // call 'view all employees' function
-        // employeeTrackerDatabase.GetAllEmployees()
-        //   .then((results) => console.table(results))
-        //   .catch((err) => console.error(err));
-        break;
+        ViewEmployees();
+                break;
       case "Add Department.":
         // call 'add dept' function
         addDepartment();
@@ -133,62 +103,109 @@ function tracker() {
 
 
 
-
-//    add each function  =============
-
-}
-
-async function ViewAllDepartments() {
-// Read all Dept and display
-  // const sql = `SELECT department.id AS Dept ID, 
-  // department.name AS Dept FROM department;`;
-  db.query('SELECT * FROM department', function (err, results) {
-    // console.log(results);
-    console.log(" ");
-  console.table(results);
-   });
+  async function ViewAllDepartments() {
+    // Read all Dept and display
+    // const sql = `SELECT department.id AS Dept ID, 
+    // department.name AS Dept FROM department;`;
+    db.query('SELECT * FROM department', function (err, depts) {
+      console.log(depts);
+      console.log(" ");
+      console.table(depts);
+    })
+  }
 
 
+  }
 
-  // db.query(sql, (err, params, err, results) => {
-  //   if (err) {
-  //    console.table(results);
-  //   }else{
-  //     console.error(err);
-  //   }
-  //    return;
-  //      tracker();
-      
-  // });
+  function ViewRoles() {
+
+
+  }
+
+  function ViewEmployees() {
+
+// ???? to review
+    const sql = `SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;`;
+    
+    db.query(sql, function(err, res) {
+        if (err) throw err
+        console.table(res)
+        startPrompt()
+    })
+
+  }
+
+  function addDepartment() {
+    inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "name",
+        message: "What is the name of the Department you would like to add?",
+      },
+    ])
+    .then(function (res) {
+      let query = db.query(
+        "INSERT INTO department SET ?",
+        {
+          name: res.name,
+        },
+        (err) => {
+          if (err) throw err;
+          console.log(`Added the ${res.name} Department!`);
+          runPrompt();
+        }
+      );
+    });
+
+  }
+
+  function addRole() {
+
+  }
+
+  function addEmployee() {
+
+  }
+
+  function updateEmployeeRole() {
+
+  }
+
+  function quit() {
+    console.log('BYE')
+    process.quit();
+  }
+
+
+
+
+
+  figlet(
+    'EMPLOYEE TRACKER',
   
+    {
+      font: "Big Money-nw",
+      horizontalLayout: "Half",
+      verticalLayout: "Half",
+      width: 100,
+      whitespaceBreak: true
+    },
+  
+    function (err, data) {
+      if (err) {
+        console.log("Error found in Figlet...");
+        console.dir(err);
+        return;
+      }
+      console.log(data);
+    }
+  
+  )
+
+  setTimeout(tracker, 1000);
 
 
 
-}
-
-function ViewRoles() {
-
-}
-function ViewEmployees() {
-
-}
-function addDepartment() {
-
-}
-
-function addRole() {
-
-}
-function addEmployee() {
-
-}
-function updateEmployeeRole() {
-
-}
-
-function quit() {
-  console.log('BYE')
-  process.quit();
-}
-
-tracker();
+  // figlet();
+  // tracker();
