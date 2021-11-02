@@ -16,7 +16,7 @@ const mysql = require("mysql2");
 const PORT = process.env.PORT || 3001;
 
 // Import and require console table for data layout
-require("console.table");
+const cTable = require('console.table');
 
 
 
@@ -25,7 +25,7 @@ const db = mysql.createConnection({
     host: "localhost",
     // MySQL username,
     user: "root",
-    //  MySQL password here
+    //  MySQL password here using 'dotenv'
     password: process.env.DB_PASSWORD,
     database: "employee_tracker_db",
   },
@@ -37,14 +37,16 @@ const db = mysql.createConnection({
 
 console.log(" ");
 
+// main program ----------------
 
-function tracker() {
+const tracker = () => {
   inquirer
     // present choices for database entry
-    .prompt([{
+    .prompt([
+      {
         type: "list",
         message: "Please enter your selection....",
-        name: "selection",
+        name: "select",
         choices: [
           "View All Departments",
           "View All Roles",
@@ -53,11 +55,12 @@ function tracker() {
           "Add A Role",
           "Add An Employee",
           "Update An Employee Role",
-          "Quit"
+          "Quit",
         ],
       },
       console.log(" "),
     ])
+
     // To review  -----------
     .then((entry) => {
       getAnswerTo(entry.selection);
