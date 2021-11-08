@@ -34,7 +34,6 @@ const db = mysql.createConnection({
 );
 
 
-
 console.log(" ");
 
 // main program ----------------
@@ -63,10 +62,7 @@ const tracker = () => {
 
     // To review  -----------
     .then((entry) => {
-      getAnswerTo(entry.selection);
-    });
-  const getAnswerTo = (reply) => {
-    switch (reply) {
+        switch (entry.reply) {
       case "View All Departments":
         // View All Departments function  
         ViewAllDepartments();
@@ -102,15 +98,14 @@ const tracker = () => {
         quit();
         break;
     }
-  };
-
+  });
 
 
   function ViewAllDepartments() {
     // Read all Dept and display
     const sql = `SELECT department.id AS Dept ID, department.name AS Dept FROM department;`;
     db.query('SELECT * FROM department', function (err, Dept) {
-      console.log(Dept);
+      console.log(ept);
     console.log(" ");
     console.table(department);
   })

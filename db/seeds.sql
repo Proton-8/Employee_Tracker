@@ -1,7 +1,7 @@
 
 -- insert data into department table
 
-       INSERT INTO department (name)
+       INSERT INTO department (dept)
 VALUES ("Engineering"),
        ("Sales"),
        ("Marketing"),
@@ -29,6 +29,6 @@ VALUES ("Ronald", "Reagan", 1, NULL ),
        ("Peanut", "Butter", 2, 1 ), 
        ("Peas" , "Canned", 4, NULL ),
        ("Donald", "Duck", 5, 4 ),
-       ("Max", "Million", 6, 5 );
+       ("Max", "Million", 6, 1);
 
 
