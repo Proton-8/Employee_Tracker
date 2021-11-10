@@ -76,15 +76,15 @@ In details it will have a database with the following three tables:
 </p>
 
 
-
+<br>
 <h2>  Example of the database being populated: </h2>
 
-<img src="Test-verified.gif" alt="Test DEMO GIF">
+<img src="assets\Parts_seeded.JPG" alt="seed demo">
 
 </p>
 <h2>Screenshot of Startup</h2>
 
-<img src="assets\Startup.jpg" alt=" DEMO screenshot">
+<img src="assets\Startup.jpg" alt="start screenshot">
 <p>
 
 
