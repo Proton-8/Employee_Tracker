@@ -76,17 +76,17 @@ function tracker() {
           addDepartment();
           break;
 
-        case "Add A Role.":
+        case "Add A Role":
           // call 'add a role' function
           addRole();
           break;
 
-        case "Add An Employee.":
+        case "Add An Employee":
           //  call 'add an employee' function
           addEmployee();
           break;
 
-        case "Update An Employee Role.":
+        case "Update An Employee Role":
           // call 'update an employee role' function
           updateEmployeeRole();
           break;
@@ -148,24 +148,92 @@ function addDepartment() {
 }
 
 
+// This function will handle adding an employee
+function addEmployee() {
+  console.log ("line 153");
+  let roles = ["No Role"];
+  let managers = ["No Manager"];
+  // First get the list of roles    
+  db.query("SELECT * FROM roles ",
+      function (err, roleRes) {
+          if (err) console.log(err);
+          for (let i = 0; i < roleRes.length; i++) {
+              if (roleRes[i].title) {
+                  roles.push(roleRes[i].title);
+              }
+          }
+
+          // Next get list of possible managers
+          db.query("SELECT * from employee ",
+              function (err, empRes) {
+                  if (err) console.log(err);
+                  for (let i = 0; i < empRes.length; i++) {
+                      if (empRes[i].first_name) {
+                          managers.push(empRes[i].first_name + " " + empRes[i].last_name);
+                      }
+                  }
+
+                  // Get the employee details
+                  let questions = [
+                      "What is the employee first name?",
+                      "What is the employee last name?",
+                      "What is the employee role?",
+                      "Who is the employee manager?"];
+                  inquirer
+                  .prompt([
+                      {
+                          name: "firstName",
+                          type: "input",
+                          message: questions[0]
+                      },
+                      {
+                          name: "lastName",
+                          type: "input",
+                          message: questions[1]
+                      },
+                      {
+                          name: "role",
+                          type: "list",
+                          message: questions[2],
+                          choices: roles
+                      },
+                      {
+                          name: "manager",
+                          type: "list",
+                          message: questions[3],
+                          choices: managers
+                      }
+                  ]).then((data) => {
+                      // get the role to tie to 
+                      let roleId = null;
+                      for (let i = 0; i < roleRes.length; i++) {
+                          if (roleRes[i].title === data.role) {
+                              roleId = roleRes[i].id;
+                              break;
+                          }
+                      }
+                      // Get the manager to tie to
+                      let managerId = null;
+                      for (let i = 0; i < empRes.length; i++) {
+                          if (empRes[i].first_name + " " + empRes[i].last_name === data.manager) {
+                              managerId = empRes[i].id;
+                              break;
+                          }
+                      }
+                      employee.insertEmployee(data.firstName, data.lastName, roleId, managerId);
+                      tracker()
+                  });
+
+              }
+          );
+      }
+  );
 
 
-//     .then(function (res) {
-//       let query = db.query(
-//         "INSERT INTO department SET ?",
-//         {
-//           name: res.name,
-//         },
-//         (err) => {
-//           if (err) throw err;
-//           console.log(`Added the ${res.name} Department!`);
-//           tracker();
-//         }
-//       );
 
-//     });
 
-// }
+
+
 function addRole() {
   let departments = ["No Department"];
   // First get the list of departments    
@@ -180,9 +248,9 @@ function addRole() {
 
       // Get role details
       let questions = [
-        "What is the role you would like to add?",
-        "What is the role salary?",
-        "What is the role department?"];
+        "What is the new role you would like to add?",
+        "What is the new role salary?",
+        "What is the new role department?"];
       inquirer.prompt([
         {
           name: "title",
@@ -200,16 +268,16 @@ function addRole() {
           message: questions[2],
           choices: departments
         }
-      ]).then((data) => {
+      ]).then((res) => {
         // get the department to tie to 
-        let departmentId = null;
+        let department_id = null;
         for (let i = 0; i < res.length; i++) {
-          if (res[i].name === data.department) {
+          if (res[i].title === res.department) {
             departmentId = res[i].id;
             break;
           }
         }
-        role.insertRole(data.title, data.salary, departmentId);
+        role.insertRole(res.title, res.salary, department_id);
 
       });
       tracker();
@@ -220,47 +288,47 @@ function addRole() {
 
 // arrow function version of addEmployee() {
 
-const addEmployee = () => {
-  inquirer
-    .prompt([{
-      type: 'input',
-      name: 'employeeFirstName',
-      message: 'Enter Employee first name',
-    },
-    {
-      type: 'input',
-      name: 'employeeLastName',
-      message: 'Enter employee last name',
-    },
-    {
-      type: 'input',
-      name: 'role',
-      message: 'Enter the role for this employee',
-    },
-    {
-      type: 'input',
-      name: 'managerFirstName',
-      message: 'Enter manager first name. Leave blank if no manager.',
-    },
-    {
-      type: 'input',
-      name: 'managerLastName',
-      message: 'Enter manager last name. Leave blank if no manager.',
-    },
-    ])
-    .then((employeeInfo) => {
-      if (!(employeeInfo.employeeFirstName && employeeInfo.employeeLastName && employeeInfo.role)) {
-        console.info(`Employee first name, last name, or role can not be blank`);
-        return;
-      }
-      employeeTrackerDatabase.AddEmployee(employeeInfo.employeeFirstName, employeeInfo.employeeLastName,
-        employeeInfo.role, employeeInfo.managerFirstName, employeeInfo.managerLastName)
-        .then((results) => {
-          console.log(`Employee ${employeeInfo.employeeFirstName} ${employeeInfo.employeeLastName} added successfully`)
-        })
-        .catch((err) => console.error(err.message));
-    });
-  tracker();
+// const addEmployee = () => {
+//   inquirer
+//     .prompt([{
+//       type: 'input',
+//       name: 'employeeFirstName',
+//       message: 'Enter Employee first name',
+//     },
+//     {
+//       type: 'input',
+//       name: 'employeeLastName',
+//       message: 'Enter employee last name',
+//     },
+//     {
+//       type: 'input',
+//       name: 'role',
+//       message: 'Enter the role for this employee',
+//     },
+//     {
+//       type: 'input',
+//       name: 'managerFirstName',
+//       message: 'Enter manager first name. Leave blank if no manager.',
+//     },
+//     {
+//       type: 'input',
+//       name: 'managerLastName',
+//       message: 'Enter manager last name. Leave blank if no manager.',
+//     },
+//     ])
+//     .then((employeeInfo) => {
+//       if (!(employeeInfo.employeeFirstName && employeeInfo.employeeLastName && employeeInfo.role)) {
+//         console.info(`Employee first name, last name, or role can not be blank`);
+//         return;
+//       }
+//       employeeTrackerDatabase.AddEmployee(employeeInfo.employeeFirstName, employeeInfo.employeeLastName,
+//         employeeInfo.role, employeeInfo.managerFirstName, employeeInfo.managerLastName)
+//         .then((results) => {
+//           console.log(`Employee ${employeeInfo.employeeFirstName} ${employeeInfo.employeeLastName} added successfully`)
+//         })
+//         .catch((err) => console.error(err.message));
+//     });
+//   tracker();
 }
 
 
