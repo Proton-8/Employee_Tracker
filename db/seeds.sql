@@ -26,9 +26,9 @@ VALUES ("Engineering Manager", 200000.00, 1),
 -- insert data into employee table
 INSERT INTO employee (first_name, last_name, roles_id, manager_id)
 VALUES ("Ronald", "Reagan", 1, NULL ),
-       ("Peanut", "Butter", 2, 1 ), 
-       ("Peas" , "Canned", 4, NULL ),
-       ("Donald", "Duck", 5, 4 ),
-       ("Max", "Million", 6, 1);
+       ("Minny", "Mouse", 2, 1 ), 
+       ("Bob" , "Evans", 4, NULL ),
+       ("Donald", "Duck", 5, 3 ),
+       ("Santa", "Claus", 6, 1);
 
 
